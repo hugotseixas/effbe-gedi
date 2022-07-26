@@ -41,3 +41,5 @@ vignettes/*.pdf
 # netrc authentication file
 .netrc
 
+# Data folder
+data
