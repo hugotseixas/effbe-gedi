@@ -1,0 +1,119 @@
+---
+title: "Short term effects of fire over forest aboveground biomass in the brazilian amazon"
+author: 
+  - name: Hugo Tameirão Seixas
+    email: seixas.hugo@protonmail.com
+    url: hugotseixas.com
+    affiliations:
+      - name: State University of Campinas
+toc: true
+toc-title: Contents
+format: 
+  html:
+    theme: lux
+page-layout: article
+editor: visual
+bibliography: references.bib
+csl: frontiers-in-ecology-and-the-environment.csl
+link-citations: true
+abstract: "The objective of this experiment is to estimate the effect of forest fire over the biomass of tropical rainforest in the brazillian amazon. The analysed aboveground biomass are predictions derived from Global Ecosystem Dynamics Investigation (GEDI) Level 4A (L4A) Version 2. The experimental design is based in the sampling areas of 25 hectares over the brazillian amazon biome, where burned forest areas are compared to intact forests. The fire estimates are derived from the Moderate Resolution Imaging Spectroradiometer (MODIS) Burned Area data product (MCD64A1 Version 6). We expect to estimate a distribution of effects for the entire biome, which will allow the discussion about its possible heterogeneity and confounders."
+---
+
+```{r}
+#| include: false
+
+library(DiagrammeR)
+
+```
+
+------------------------------------------------------------------------
+
+# Introduction
+
+The effect of fire over forests have already been estimated in different studies. A field study found effects after a single burning event, in which the biomass reduction increased with more occurrences of fires [@Martins2012]. Studies also reported how trees characteristics also influence the impact of fire over forests [@Rocha2013].
+
+------------------------------------------------------------------------
+
+# Objectives
+
+------------------------------------------------------------------------
+
+# Materials and Methods
+
+### Literature
+
+The discussion of our results are going to be discussed against a predefined literature. We performed a search in the Scopus database.
+
+> TITLE-ABS-KEY ((fire OR burn) W/10 (effect OR impact) W/10 (forest OR tree) W/10 (carbon OR biomass)) AND (LIMIT-TO(LANGUAGE, "English"))
+
+The search returned 93 results, after screening (the strategy was to read titles and abstract, and select studies related to the estimation of the effect of fire occurrence over forest biomass).
+
+The literature will serve as a base to identify possible causes of forest above ground biomass loss. A DAG will be created with information obtained from the literature, and will be compared to the DAG of this experiment.
+
+### Experiment Scopus
+
+### Data Sources
+
+### Experiment Design
+
+```{r}
+#| echo: false
+
+grViz(
+  "digraph {
+  
+  graph [layout = dot, rankdir = LR, nodesep = 0.9, ranksep = 0.3]
+  
+  node [shape = box,
+        fontname = Helvetica,
+        style = filled,
+        fontcolor = '#343a40'
+        fillcolor = '#f7f7f9'
+        penwidth = 1.2,
+        width = 2,
+        fontsize = 11]
+
+  a [label = 'LULC data']
+  b [label = 'Fire data']
+  c [label = 'AGB data']
+  d [label = 'Experiment/Control \n samples']
+  e [label = 'Distance to border']
+  f [label = 'Fire occurrence']
+  g [label = 'Forest cover']
+  h [label = 'AGB loss']
+  
+  a -> d b -> d
+  a -> g a -> e b -> f
+  c -> h e -> h f -> h g -> h
+  
+  
+  }"
+)
+
+```
+
+### Statistical analysis
+
+------------------------------------------------------------------------
+
+# Results
+
+### Statistical model
+
+### Effect of fire occurrence over forest above ground biomass
+
+### Sources of effect heterogeneity
+
+------------------------------------------------------------------------
+
+# Discussion
+
+------------------------------------------------------------------------
+
+# Conclusions
+
+------------------------------------------------------------------------
+
+# Supporting Information
+
+# References
