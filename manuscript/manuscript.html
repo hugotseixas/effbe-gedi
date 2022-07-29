@@ -140,7 +140,7 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="literature">Literature</h3>
 <p>The discussion of our results are going to be discussed against a predefined literature. We performed a search in the Scopus database.</p>
 <blockquote class="blockquote">
-<p>TITLE-ABS-KEY ((fire OR burn) W/10 (effect OR impact) W/10 (forest OR tree) W/10 (carbon OR biomass)) AND (LIMIT-TO(LANGUAGE, “English”))</p>
+<p>TITLE-ABS-KEY((fire OR burn) W/10 (forest OR tree) W/10 (carbon OR biomass OR cover OR volume OR density)) AND TITLE-ABS-KEY(amazon) AND (LIMIT-TO(LANGUAGE, “English”))</p>
 </blockquote>
 <p>The search returned 93 results, after screening (the strategy was to read titles and abstract, and select studies related to the estimation of the effect of fire occurrence over forest biomass).</p>
 <p>The literature will serve as a base to identify possible causes of forest above ground biomass loss. A DAG will be created with information obtained from the literature, and will be compared to the DAG of this experiment.</p>
@@ -155,13 +155,14 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="experiment-design">Experiment Design</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-317e6d808108102a4a62" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-317e6d808108102a4a62">{"x":{"diagram":"digraph {\n  \n  graph [layout = dot, rankdir = LR, nodesep = 0.9, ranksep = 0.3]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        width = 2,\n        fontsize = 11]\n\n  a [label = \"LULC data\"]\n  b [label = \"Fire data\"]\n  c [label = \"AGB data\"]\n  d [label = \"Experiment/Control \n samples\"]\n  e [label = \"Distance to border\"]\n  f [label = \"Fire occurrence\"]\n  g [label = \"Forest cover\"]\n  h [label = \"AGB loss\"]\n  \n  a -> d b -> d\n  a -> g a -> e b -> f\n  c -> h e -> h f -> h g -> h\n  \n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8b1d266bc4bc0419872e" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8b1d266bc4bc0419872e">{"x":{"diagram":"digraph {\n  \n  graph [layout = dot, rankdir = LR, nodesep = 0.9, ranksep = 0.3]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        width = 2,\n        fontsize = 11]\n\n  a [label = \"LULC data\"]\n  b [label = \"Fire data\"]\n  c [label = \"AGB data\"]\n  d [label = \"Experiment/Control \n samples\"]\n  e [label = \"Distance to border\"]\n  f [label = \"Fire occurrence\"]\n  g [label = \"Forest cover\"]\n  h [label = \"AGB loss\"]\n  \n  a -> d b -> d\n  a -> g a -> e b -> f\n  c -> h e -> h f -> h g -> h\n  \n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
 <section id="statistical-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-analysis">Statistical analysis</h3>
+<p>To estimate the effect of fire occurrence over forest above ground biomass, we are using diff-in-diffs, by comparing the AGB values before and after the fire event, for control and experiment areas.</p>
 <hr>
 </section>
 </section>

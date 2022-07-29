@@ -44,7 +44,7 @@ The effect of fire over forests have already been estimated in different studies
 
 The discussion of our results are going to be discussed against a predefined literature. We performed a search in the Scopus database.
 
-> TITLE-ABS-KEY ((fire OR burn) W/10 (effect OR impact) W/10 (forest OR tree) W/10 (carbon OR biomass)) AND (LIMIT-TO(LANGUAGE, "English"))
+> TITLE-ABS-KEY((fire OR burn) W/10 (forest OR tree) W/10 (carbon OR biomass OR cover OR volume OR density)) AND TITLE-ABS-KEY(amazon) AND (LIMIT-TO(LANGUAGE, "English"))
 
 The search returned 93 results, after screening (the strategy was to read titles and abstract, and select studies related to the estimation of the effect of fire occurrence over forest biomass).
 
@@ -93,6 +93,8 @@ grViz(
 ```
 
 ### Statistical analysis
+
+To estimate the effect of fire occurrence over forest above ground biomass, we are using diff-in-diffs, by comparing the AGB values before and after the fire event, for control and experiment areas.
 
 ------------------------------------------------------------------------
 
