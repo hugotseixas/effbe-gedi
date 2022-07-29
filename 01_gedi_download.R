@@ -50,7 +50,7 @@ concept_id <- concept_id$feed$entry[[1]]$id
 
 # SET GEOGRAPHIC AND TEMPORAL EXTENT ------------------------------------------
 
-# Load amazon biome limites
+# Load amazon biome limits
 amazon <- geobr::read_biomes(year = 2019) %>%
   filter(code_biome == 1) %>%
   st_transform(crs = "EPSG:4326")
