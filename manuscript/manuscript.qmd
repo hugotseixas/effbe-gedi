@@ -12,7 +12,6 @@ format:
   html:
     theme: lux
 page-layout: article
-editor: visual
 bibliography: references.bib
 csl: frontiers-in-ecology-and-the-environment.csl
 link-citations: true
