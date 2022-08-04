@@ -6,7 +6,7 @@
 #
 #
 # Authors:      Hugo Tameirao Seixas
-# Contact:      tameirao.hugo@gmail.com
+# Contact:      seixas.hugo@protonmail.com
 # Date:         2022-07-07
 #
 # Notes:
@@ -115,7 +115,7 @@ walk2(
     GET(
       url = url_link,
       write_disk(glue("./data/gedi_04A/{file_name}"), overwrite = TRUE),
-      config(netrc = TRUE, netrc_file = ".netrc"),
+      config(netrc = TRUE, netrc_file = "auth/.netrc"),
       set_cookies("LC" = "cookies")
     )
 
