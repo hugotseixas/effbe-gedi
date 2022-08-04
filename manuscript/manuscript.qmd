@@ -1,5 +1,5 @@
 ---
-title: "Short term effects of fire over forest aboveground biomass in the brazilian amazon"
+title: "Using remote sensing data to estimate short term effects of fire over forest aboveground biomass in the brazilian amazon: effects are..."
 author: 
   - name: Hugo Tameirão Seixas
     email: seixas.hugo@protonmail.com
@@ -56,22 +56,35 @@ The literature will serve as a base to identify possible causes of forest above 
 
 ### Experiment Design
 
+We can see a experiment design diagram in @fig-expdiag.
+
 ```{r}
+#| label: fig-expdiag
 #| echo: false
+#| fig-cap: "Experiment design diagram."
+#| fig-alt: "This is a diagram"
 
 grViz(
-  "digraph {
+  "digraph expdiag {
   
-  graph [layout = dot, rankdir = LR, nodesep = 0.9, ranksep = 0.3]
+  tooltip = ' '
+  
+  graph [layout = dot, rankdir = TD, nodesep = 0.1, ranksep = 1,tooltip = ' ']
   
   node [shape = box,
         fontname = Helvetica,
         style = filled,
         fontcolor = '#343a40'
         fillcolor = '#f7f7f9'
-        penwidth = 1.2,
-        width = 2,
-        fontsize = 11]
+        penwidth = 2.2,
+        width = 3,
+        height = 1.5,
+        fontsize = 20,
+        tooltip = ' ']
+
+  edge [arrowsize = 2,
+        penwidth = 2.2,
+        tooltip = ' ']
 
   a [label = 'LULC data']
   b [label = 'Fire data']
@@ -83,8 +96,9 @@ grViz(
   h [label = 'AGB loss']
   
   a -> d b -> d
+  c -> h e -> h f -> h g -> d
   a -> g a -> e b -> f
-  c -> h e -> h f -> h g -> h
+  d -> h
   
   
   }"
@@ -101,6 +115,76 @@ To estimate the effect of fire occurrence over forest above ground biomass, we a
 # Results
 
 ### Statistical model
+
+We can see two DAGs in the @fig-dags
+
+```{r}
+#| label: fig-dags
+#| echo: false
+#| fig-cap: "DAGs. TODO: need to put a title for each DAG"
+#| fig-alt: "Two DAGs."
+
+grViz(
+  
+  "digraph dags {
+  
+  tooltip = ' '
+  
+  graph [layout = dot, rankdir = TD, nodesep = 0.3, ranksep = 1, tooltip = ' ']
+  
+  edge [tooltip = ' ']
+  
+  node [shape = box,
+        fontname = Helvetica,
+        style = filled,
+        fontcolor = '#343a40'
+        fillcolor = '#f7f7f9'
+        penwidth = 1.2,
+        fixedsize = true,
+        width = 0.8,
+        height = 0.8,
+        tooltip = ' ']
+        
+  a [label = < <B>Fire</B> >]
+  b [label = < <B>AGB</B> >]
+  1 [label = < <B>Fire</B> >]
+  2 [label = < <B>AGB</B> >]
+  
+  node [shape = circle,
+        fontname = Helvetica,
+        style = filled,
+        fontcolor = '#343a40'
+        fillcolor = '#f7f7f9'
+        penwidth = 1.2,
+        fixedsize = true,
+        width = 1,
+        tooltip = ' ']
+  
+  d [label = SL] # Selective Logging
+  e [label = TC] # Tree characteristics
+  f [label = Drought]
+  g [label = DTB]
+  3 [label = Drought]
+  4 [label = DTB]
+  
+  a -> b  
+  d -> b
+  e -> a e -> b
+  f -> a f -> b
+  g -> a g-> b g -> d
+  
+
+  
+  
+  1 -> 2
+  3 -> 1 3 -> 2
+  4 -> 2
+  
+  }"
+  
+)
+
+```
 
 ### Effect of fire occurrence over forest above ground biomass
 
