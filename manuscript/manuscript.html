@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.32">
+<meta name="generator" content="quarto-1.0.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -100,7 +100,7 @@ div.csl-indent {
   <div class="quarto-title-meta-heading">Affiliation</div>
   
     <div class="quarto-title-meta-contents">
-    <a href="hugotseixas.com">Hugo Tameirão Seixas</a> 
+    <a href="https://hugotseixas.com/">Hugo Tameirão Seixas</a> 
   </div>
     <div class="quarto-title-meta-contents">
         <p class="affiliation">
@@ -132,6 +132,11 @@ div.csl-indent {
 </section>
 <section id="objectives" class="level1">
 <h1>Objectives</h1>
+<p>The objectives of this project are:</p>
+<ul>
+<li><p>Estimate the effects of fire occurrence over tropical rain forest above ground biomass;</p></li>
+<li><p>Identify the main drivers of heterogeneity of the effects;</p></li>
+</ul>
 <hr>
 </section>
 <section id="materials-and-methods" class="level1">
@@ -147,23 +152,27 @@ div.csl-indent {
 </section>
 <section id="experiment-scopus" class="level3">
 <h3 class="anchored" data-anchor-id="experiment-scopus">Experiment Scopus</h3>
+<p>The experiment will be performed within the Brazilian boundaries of the Amazon biome, in which we will analyse its forests formations. The experiment will cover the period between 2000 to 2021. We will analyse forests formations of any characteristics, and forest fires of any characteristics.</p>
 </section>
 <section id="data-sources" class="level3">
 <h3 class="anchored" data-anchor-id="data-sources">Data Sources</h3>
+<p>The fire occurrences are going to be extracted from MODIS MCD64A1 <span class="citation" data-cites="Giglio_2015">(<a href="#ref-Giglio_2015" role="doc-biblioref">Giglio <em>et al.</em> 2015</a>)</span> Version 6 product, which provides world wide burned area estimates from 2000 to 2022. The spatial resolution is approximately 500 meters.</p>
+<p>Forest cover will be represented by the Global Forest Change (1.9) <span class="citation" data-cites="Hansen_2013">(<a href="#ref-Hansen_2013" role="doc-biblioref">Hansen <em>et al.</em> 2013</a>)</span>, which provide forest cover loss from 2000 to 2021. The spatial resolution is approximately 30 meters.</p>
+<p>Biomass estimates will be provided by the GEDI L4A 2.1 Footprint Level Above ground Biomass Density product <span class="citation" data-cites="Dubayah_2022">(<a href="#ref-Dubayah_2022" role="doc-biblioref">Dubayah <em>et al.</em> 2022</a>)</span>, with temporal extent from 2019 to 2022. The spatial resolution is approximately 25 meters.</p>
 </section>
 <section id="experiment-design" class="level3">
 <h3 class="anchored" data-anchor-id="experiment-design">Experiment Design</h3>
-<p>We can see a experiment design diagram in <a href="#fig-expdiag">Figure&nbsp;1</a>.</p>
+<p>We can see the experiment overview diagram in <a href="#fig-expdiag">Figure&nbsp;1</a>.</p>
 <div class="cell">
 <div id="fig-expdiag" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div id="htmlwidget-e32d64de633f8afb1b7d" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e32d64de633f8afb1b7d">{"x":{"diagram":"digraph expdiag {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.1, ranksep = 1,tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 2.2,\n        width = 3,\n        height = 1.5,\n        fontsize = 20,\n        tooltip = \" \"]\n\n  edge [arrowsize = 2,\n        penwidth = 2.2,\n        tooltip = \" \"]\n\n  a [label = \"LULC data\"]\n  b [label = \"Fire data\"]\n  c [label = \"AGB data\"]\n  d [label = \"Treatment/Control \n samples\"]\n  e [label = \"Distance to border\"]\n  f [label = \"Fire occurrence\"]\n  g [label = \"Forest cover\"]\n  h [label = \"AGB loss\"]\n  \n  a -> d b -> d\n  c -> h e -> h f -> h g -> d\n  a -> g a -> e b -> f\n  d -> h\n  \n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-42e75e70660a3efcb3f1" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-42e75e70660a3efcb3f1">{"x":{"diagram":"digraph expdiag {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.1, ranksep = 1,tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 2.2,\n        width = 3,\n        height = 1.5,\n        fontsize = 20,\n        tooltip = \" \"]\n\n  edge [arrowsize = 2,\n        penwidth = 2.2,\n        tooltip = \" \"]\n\n  a [label = \"LULC data\"]\n  b [label = \"Fire data\"]\n  c [label = \"AGB data\"]\n  d [label = \"Treatment/Control \n samples\"]\n  e [label = \"Distance to border\"]\n  f [label = \"Fire occurrence\"]\n  g [label = \"Forest cover\"]\n  h [label = \"AGB loss\"]\n  \n  a -> d b -> d\n  c -> h e -> h f -> h g -> d\n  a -> g a -> e b -> f\n  d -> h\n  \n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p></p><figcaption class="figure-caption">Figure 1: Experiment design diagram.</figcaption><p></p>
 </figure>
 </div>
 </div>
-<p>We are going to conduct a sampling scheme that will randomly extract ~400km² rectangles, spaced at least by ~400km between each other, by the Brazilian Amazon region.</p>
+<p>We are going to conduct a sampling scheme that will randomly extract ~400km² rectangles, spaced at least by ~100km between each other, by the Brazilian Amazon region.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="exp_dsn.svg" class="img-fluid figure-img"></p>
@@ -198,8 +207,8 @@ div.csl-indent {
 <div class="cell">
 <div id="fig-dags" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div id="htmlwidget-3f43ab37374902824f89" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3f43ab37374902824f89">{"x":{"diagram":"digraph dags {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.3, ranksep = 1, tooltip = \" \"]\n  \n  edge [tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 0.8,\n        height = 0.8,\n        tooltip = \" \"]\n        \n  a [label = < <B>Fire<\/B> >]\n  b [label = < <B>AGB<\/B> >]\n  1 [label = < <B>Fire<\/B> >]\n  2 [label = < <B>AGB<\/B> >]\n  \n  node [shape = circle,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 1,\n        tooltip = \" \"]\n  \n  d [label = SL] # Selective Logging\n  e [label = TC] # Tree characteristics\n  f [label = Drought]\n  g [label = DTB]\n  3 [label = Drought]\n  4 [label = DTB]\n  \n  a -> b  \n  d -> b\n  e -> a e -> b\n  f -> a f -> b\n  g -> a g-> b g -> d\n  \n\n  \n  \n  1 -> 2\n  3 -> 1 3 -> 2\n  4 -> 2\n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e476496db388f826e909" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e476496db388f826e909">{"x":{"diagram":"digraph dags {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.3, ranksep = 1, tooltip = \" \"]\n  \n  edge [tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 0.8,\n        height = 0.8,\n        tooltip = \" \"]\n        \n  a [label = < <B>Fire<\/B> >]\n  b [label = < <B>AGB<\/B> >]\n  1 [label = < <B>Fire<\/B> >]\n  2 [label = < <B>AGB<\/B> >]\n  \n  node [shape = circle,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 1,\n        tooltip = \" \"]\n  \n  d [label = SL] # Selective Logging\n  e [label = TC] # Tree characteristics\n  f [label = Drought]\n  g [label = DTB]\n  3 [label = Drought]\n  4 [label = DTB]\n  \n  a -> b  \n  d -> b\n  e -> a e -> b\n  f -> a f -> b\n  g -> a g-> b g -> d\n  \n\n  \n  \n  1 -> 2\n  3 -> 1 3 -> 2\n  4 -> 2\n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p></p><figcaption class="figure-caption">Figure 2: DAGs. TODO: need to put a title for each DAG</figcaption><p></p>
 </figure>
 </div>
@@ -230,6 +239,15 @@ div.csl-indent {
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-Dubayah_2022" class="csl-entry" role="doc-biblioentry">
+Dubayah RO, Armston J, Kellner JR, <em>et al.</em> 2022. <a href="https://doi.org/10.3334/ORNLDAAC/2056">GEDI L4A footprint level aboveground biomass density, version 2.1</a>.
+</div>
+<div id="ref-Giglio_2015" class="csl-entry" role="doc-biblioentry">
+Giglio L, Justice C, Boschetti L, and Roy D. 2015. <a href="https://doi.org/10.5067/MODIS/MCD64A1.006">MCD64A1 MODIS/terra+aqua burned area monthly L3 global 500m SIN grid V006</a>.
+</div>
+<div id="ref-Hansen_2013" class="csl-entry" role="doc-biblioentry">
+Hansen MC, Potapov PV, Moore R, <em>et al.</em> 2013. <a href="https://doi.org/10.1126/science.1244693">High-resolution global maps of 21st-century forest cover change</a>. <em>Science</em> <strong>342</strong>: 850–3.
+</div>
 <div id="ref-Rocha2013" class="csl-entry" role="doc-biblioentry">
 Rocha W, Metcalfe DB, Doughty CE, <em>et al.</em> 2013. <a href="https://doi.org/10.1080/17550874.2013.798368">Ecosystem productivity and carbon cycling in intact and annually burnt forest at the dry southern limit of the amazon rainforest (mato grosso, brazil)</a>. <em>Plant Ecology &amp; Diversity</em> <strong>7</strong>: 25–40.
 </div>

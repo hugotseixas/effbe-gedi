@@ -3,7 +3,7 @@ title: "Using remote sensing data to estimate short term effects of fire over fo
 author: 
   - name: Hugo Tameirão Seixas
     email: seixas.hugo@protonmail.com
-    url: hugotseixas.com
+    url: https://hugotseixas.com/
     affiliations:
       - name: State University of Campinas
 toc: true
@@ -35,6 +35,12 @@ The effect of fire over forests have already been estimated in different studies
 
 # Objectives
 
+The objectives of this project are:
+
+- Estimate the effects of fire occurrence over tropical rain forest above ground biomass;
+
+- Identify the main drivers of heterogeneity of the effects;
+
 ------------------------------------------------------------------------
 
 # Materials and Methods
@@ -51,11 +57,19 @@ The literature will serve, besides providing the theoretical foundation for the 
 
 ### Experiment Scopus
 
+The experiment will be performed within the Brazilian boundaries of the Amazon biome, in which we will analyse its forests formations. The experiment will cover the period between 2000 to 2021. We will analyse forests formations of any characteristics, and forest fires of any characteristics. 
+
 ### Data Sources
+
+The fire occurrences are going to be extracted from MODIS MCD64A1 [@Giglio_2015] Version 6 product, which provides world wide burned area estimates from 2000 to 2022. The spatial resolution is approximately 500 meters.
+
+Forest cover will be represented by the Global Forest Change (1.9) [@Hansen_2013], which provide forest cover loss from 2000 to 2021. The spatial resolution is approximately 30 meters.
+
+Biomass estimates will be provided by the GEDI L4A 2.1 Footprint Level Above ground Biomass Density product [@Dubayah_2022], with temporal extent from 2019 to 2022. The spatial resolution is approximately 25 meters.
 
 ### Experiment Design
 
-We can see a experiment design diagram in @fig-expdiag.
+We can see the experiment overview diagram in @fig-expdiag.
 
 ```{r}
 #| label: fig-expdiag
@@ -105,7 +119,7 @@ grViz(
 
 ```
 
-We are going to conduct a sampling scheme that will randomly extract ~400km² rectangles, spaced at least by ~400km between each other, by the Brazilian Amazon region.
+We are going to conduct a sampling scheme that will randomly extract ~400km² rectangles, spaced at least by ~100km between each other, by the Brazilian Amazon region.
 
 ![Experiment Design](exp_dsn.svg)
 
