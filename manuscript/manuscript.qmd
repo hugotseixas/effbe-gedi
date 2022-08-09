@@ -45,31 +45,21 @@ The objectives of this project are:
 
 # Materials and Methods
 
-### Literature
-
-The discussion of our results are going to be discussed against a predefined literature. We performed a search in the Scopus database.
-
-> TITLE-ABS-KEY((fire OR burn) W/10 (forest OR tree) W/10 (carbon OR biomass OR cover OR volume OR density)) AND TITLE-ABS-KEY(amazon) AND (LIMIT-TO(LANGUAGE, "English"))
-
-The search returned 93 results, after screening (the strategy was to read titles and abstract, and select studies related to the estimation of the effect of fire occurrence over forest biomass).
-
-The literature will serve, besides providing the theoretical foundation for the project development and future discussions, as a base to identify possible causes of forest above ground biomass loss. A DAG will be created with information obtained from the literature, and will be compared to the DAG of this experiment.
-
 ### Experiment Scopus
 
 The experiment will be performed within the Brazilian boundaries of the Amazon biome, in which we will analyse its forests formations. The experiment will cover the period between 2000 to 2021. We will analyse forests formations of any characteristics, and forest fires of any characteristics. 
 
-### Data Sources
-
-The fire occurrences are going to be extracted from MODIS MCD64A1 [@Giglio_2015] Version 6 product, which provides world wide burned area estimates from 2000 to 2022. The spatial resolution is approximately 500 meters.
-
-Forest cover will be represented by the Global Forest Change (1.9) [@Hansen_2013], which provide forest cover loss from 2000 to 2021. The spatial resolution is approximately 30 meters.
-
-Biomass estimates will be provided by the GEDI L4A 2.1 Footprint Level Above ground Biomass Density product [@Dubayah_2022], with temporal extent from 2019 to 2022. The spatial resolution is approximately 25 meters.
-
 ### Experiment Design
 
-We can see the experiment overview diagram in @fig-expdiag.
+To estimate the effect of forest fires over forest formations, we are going to compare two different groups: the control group (NB), that are forest formations in which fire occurrence was not detected from 2010 to 2021 (in other words, we assume this area was not burned in this period); the event group (YB), that are forest formations in which fire occurrence was detected only in 2020, in the period between 2010 and 2021. We will calculate differences between both groups before and after 2020 (which is the year when the fire event occurred or not). 
+
+To extract observations of each group, we will use land cover and fire occurrence data (@sec-datasource). Only a small subset of the whole data available is going to be used to make inferences, and will be performed by a sampling scheme. The sampling scheme will consist of four steps: 1. randomly assign rectangles of ~10000km² inside the Brazilian Amazon biome, spaced at least by ~100km between each other, these are going to be named major sample cells (MaC); 2. randomly assign one rectangle of ~100km² inside each MaC, these are going to be named minor sample cells (MiC); 3. randomly assign 100 rectangles of ~0.25km² (50 NB rectangles and 50 YB rectangles) inside each MiC, NB rectangles will have to be at least 2km far from YB rectangles, these will be named observation cells (ObC); 4. extract values inside each ObC. This process will be repeat 100 times, in which we will shift the MaC positions to ensure more heterogeneity between sampling rounds.
+
+We are going to use the following variables: above ground biomass, fire frequency, fire occurrence in 2020, experiment group, forest cover percentage inside burned pixel, fragmentation of the sampling rectangle, distance of observations to border. 
+
+We will also apply a filter to the MiC, to avoid regions in which we don't have a lot of areas of internet (areas where we can sample NB and YB observations). The rule will be that apt areas for both experiment groups should cover at least 30% of the MiC, each.
+
+The experiment overview diagram in @fig-expdiag.
 
 ```{r}
 #| label: fig-expdiag
@@ -119,23 +109,37 @@ grViz(
 
 ```
 
-We are going to conduct a sampling scheme that will randomly extract ~400km² rectangles, spaced at least by ~100km between each other, by the Brazilian Amazon region.
 
 ![Experiment Design](exp_dsn.svg)
 
-Inside each sampling rectangle, we are going to identify areas that burned in 2020 but not in 2021, these are going to be the treatment group. Cells that were not burned neither in 2020 and 2021 are going to be considered as the control group. We will ensure a minimal distance of 2km between observations of each group. We will also ensure that observations from both groups were not burned at least 5 years before 2020. We are going to repeat this process 100 times, each sample performed will suffer a shit in geographic projections to ensure more heterogeneous results between sampling rounds.
+### Data processing
 
-We will also filter the sampling rectangles, to avoid areas in which we don't have a lot of areas of internet (areas where we can sample control and treatment observations). The rule will be that both experiment group areas apt to be sampled should cover at least 30% of the sampling rectangle, each.
-
-We will sample 50 pixels of each group inside each sampling rectangle, which will cover up to ~10% of the areas that are suitable for sampling.
-
-We are going to use the following variables: above ground biomass, fire frequency, fire occurrence in 2020, experiment group, forest cover percentage inside burned pixel, fragmentation of the sampling rectangle, distance of observations to border. 
 
 ### Statistical analysis
 
 To estimate the effect of fire occurrence over forest above ground biomass, we are using diff-in-diffs, by comparing the AGB values before and after the fire event, for control and experiment areas. We will use a ordinary least squares regression to perform the estimations. Since we are analyzing spatial data, there is a possibility of spatial auto correlation to affect our statistical model, so we will analyse the model residuals to detect possible spatial dependence between observations. If the autocorrelation are found to be true, we will apply spatial regressions to try to adjust the model for spatial dependence. By the end of the statistical analysis, each sampling rectangle will present a mean effect estimation.
 
 To analyse the heterogeneity of the effects of fire over above ground forest biomass, we will aggregate the values of sampling rectangles off all sampling rounds in a course hexagonal figure. Each hexagonal cell will show an aggregated mean effect and the distribution of the mean effects of the sampling rectangles.
+
+### Statistical model assumptions
+
+### Data Sources {#sec-datasource}
+
+The fire occurrences are going to be extracted from MODIS MCD64A1 [@Giglio_2015] Version 6 product, which provides world wide burned area estimates from 2000 to 2022. The spatial resolution is approximately 500 meters.
+
+Forest cover will be represented by the Global Forest Change (1.9) [@Hansen_2013], which provide forest cover loss from 2000 to 2021. The spatial resolution is approximately 30 meters.
+
+Biomass estimates will be provided by the GEDI L4A 2.1 Footprint Level Above ground Biomass Density product [@Dubayah_2022], with temporal extent from 2019 to 2022. The spatial resolution is approximately 25 meters.
+
+### Literature
+
+The discussion of our results are going to be discussed against a predefined literature. We performed a search in the Scopus database.
+
+> TITLE-ABS-KEY((fire OR burn) W/10 (forest OR tree) W/10 (carbon OR biomass OR cover OR volume OR density)) AND TITLE-ABS-KEY(amazon) AND (LIMIT-TO(LANGUAGE, "English"))
+
+The search returned 93 results, after screening (the strategy was to read titles and abstract, and select studies related to the estimation of the effect of fire occurrence over forest biomass).
+
+The literature will serve, besides providing the theoretical foundation for the project development and future discussions, as a base to identify possible causes of forest above ground biomass loss. A DAG will be created with information obtained from the literature, and will be compared to the DAG of this experiment.
 
 ![Experiment Aggregation](exp_agg.svg)
 

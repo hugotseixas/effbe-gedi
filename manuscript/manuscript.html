@@ -68,11 +68,13 @@ div.csl-indent {
   <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
   <li><a href="#materials-and-methods" id="toc-materials-and-methods" class="nav-link" data-scroll-target="#materials-and-methods">Materials and Methods</a>
   <ul class="collapse">
-  <li><a href="#literature" id="toc-literature" class="nav-link" data-scroll-target="#literature">Literature</a></li>
   <li><a href="#experiment-scopus" id="toc-experiment-scopus" class="nav-link" data-scroll-target="#experiment-scopus">Experiment Scopus</a></li>
-  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
   <li><a href="#experiment-design" id="toc-experiment-design" class="nav-link" data-scroll-target="#experiment-design">Experiment Design</a></li>
+  <li><a href="#data-processing" id="toc-data-processing" class="nav-link" data-scroll-target="#data-processing">Data processing</a></li>
   <li><a href="#statistical-analysis" id="toc-statistical-analysis" class="nav-link" data-scroll-target="#statistical-analysis">Statistical analysis</a></li>
+  <li><a href="#statistical-model-assumptions" id="toc-statistical-model-assumptions" class="nav-link" data-scroll-target="#statistical-model-assumptions">Statistical model assumptions</a></li>
+  <li><a href="#sec-datasource" id="toc-sec-datasource" class="nav-link" data-scroll-target="#sec-datasource">Data Sources</a></li>
+  <li><a href="#literature" id="toc-literature" class="nav-link" data-scroll-target="#literature">Literature</a></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
   <ul class="collapse">
@@ -141,6 +143,50 @@ div.csl-indent {
 </section>
 <section id="materials-and-methods" class="level1">
 <h1>Materials and Methods</h1>
+<section id="experiment-scopus" class="level3">
+<h3 class="anchored" data-anchor-id="experiment-scopus">Experiment Scopus</h3>
+<p>The experiment will be performed within the Brazilian boundaries of the Amazon biome, in which we will analyse its forests formations. The experiment will cover the period between 2000 to 2021. We will analyse forests formations of any characteristics, and forest fires of any characteristics.</p>
+</section>
+<section id="experiment-design" class="level3">
+<h3 class="anchored" data-anchor-id="experiment-design">Experiment Design</h3>
+<p>To estimate the effect of forest fires over forest formations, we are going to compare two different groups: the control group (NB), that are forest formations in which fire occurrence was not detected from 2010 to 2021 (in other words, we assume this area was not burned in this period); the event group (YB), that are forest formations in which fire occurrence was detected only in 2020, in the period between 2010 and 2021. We will calculate differences between both groups before and after 2020 (which is the year when the fire event occurred or not).</p>
+<p>To extract observations of each group, we will use land cover and fire occurrence data (<a href="#sec-datasource">Section&nbsp;3.0.6</a>). Only a small subset of the whole data available is going to be used to make inferences, and will be performed by a sampling scheme. The sampling scheme will consist of four steps: 1. randomly assign rectangles of ~10000km² inside the Brazilian Amazon biome, spaced at least by ~100km between each other, these are going to be named major sample cells (MaC); 2. randomly assign one rectangle of ~100km² inside each MaC, these are going to be named minor sample cells (MiC); 3. randomly assign 100 rectangles of ~0.25km² (50 NB rectangles and 50 YB rectangles) inside each MiC, NB rectangles will have to be at least 2km far from YB rectangles, these will be named observation cells (ObC); 4. extract values inside each ObC. This process will be repeat 100 times, in which we will shift the MaC positions to ensure more heterogeneity between sampling rounds.</p>
+<p>We are going to use the following variables: above ground biomass, fire frequency, fire occurrence in 2020, experiment group, forest cover percentage inside burned pixel, fragmentation of the sampling rectangle, distance of observations to border.</p>
+<p>We will also apply a filter to the MiC, to avoid regions in which we don’t have a lot of areas of internet (areas where we can sample NB and YB observations). The rule will be that apt areas for both experiment groups should cover at least 30% of the MiC, each.</p>
+<p>The experiment overview diagram in <a href="#fig-expdiag">Figure&nbsp;1</a>.</p>
+<div class="cell">
+<div id="fig-expdiag" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<div id="htmlwidget-59aab13dcd96951db7cf" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-59aab13dcd96951db7cf">{"x":{"diagram":"digraph expdiag {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.1, ranksep = 1,tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 2.2,\n        width = 3,\n        height = 1.5,\n        fontsize = 20,\n        tooltip = \" \"]\n\n  edge [arrowsize = 2,\n        penwidth = 2.2,\n        tooltip = \" \"]\n\n  a [label = \"LULC data\"]\n  b [label = \"Fire data\"]\n  c [label = \"AGB data\"]\n  d [label = \"Treatment/Control \n samples\"]\n  e [label = \"Distance to border\"]\n  f [label = \"Fire occurrence\"]\n  g [label = \"Forest cover\"]\n  h [label = \"AGB loss\"]\n  \n  a -> d b -> d\n  c -> h e -> h f -> h g -> d\n  a -> g a -> e b -> f\n  d -> h\n  \n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p></p><figcaption class="figure-caption">Figure 1: Experiment design diagram.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="exp_dsn.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Experiment Design</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="data-processing" class="level3">
+<h3 class="anchored" data-anchor-id="data-processing">Data processing</h3>
+</section>
+<section id="statistical-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-analysis">Statistical analysis</h3>
+<p>To estimate the effect of fire occurrence over forest above ground biomass, we are using diff-in-diffs, by comparing the AGB values before and after the fire event, for control and experiment areas. We will use a ordinary least squares regression to perform the estimations. Since we are analyzing spatial data, there is a possibility of spatial auto correlation to affect our statistical model, so we will analyse the model residuals to detect possible spatial dependence between observations. If the autocorrelation are found to be true, we will apply spatial regressions to try to adjust the model for spatial dependence. By the end of the statistical analysis, each sampling rectangle will present a mean effect estimation.</p>
+<p>To analyse the heterogeneity of the effects of fire over above ground forest biomass, we will aggregate the values of sampling rectangles off all sampling rounds in a course hexagonal figure. Each hexagonal cell will show an aggregated mean effect and the distribution of the mean effects of the sampling rectangles.</p>
+</section>
+<section id="statistical-model-assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-model-assumptions">Statistical model assumptions</h3>
+</section>
+<section id="sec-datasource" class="level3">
+<h3 class="anchored" data-anchor-id="sec-datasource">Data Sources</h3>
+<p>The fire occurrences are going to be extracted from MODIS MCD64A1 <span class="citation" data-cites="Giglio_2015">(<a href="#ref-Giglio_2015" role="doc-biblioref">Giglio <em>et al.</em> 2015</a>)</span> Version 6 product, which provides world wide burned area estimates from 2000 to 2022. The spatial resolution is approximately 500 meters.</p>
+<p>Forest cover will be represented by the Global Forest Change (1.9) <span class="citation" data-cites="Hansen_2013">(<a href="#ref-Hansen_2013" role="doc-biblioref">Hansen <em>et al.</em> 2013</a>)</span>, which provide forest cover loss from 2000 to 2021. The spatial resolution is approximately 30 meters.</p>
+<p>Biomass estimates will be provided by the GEDI L4A 2.1 Footprint Level Above ground Biomass Density product <span class="citation" data-cites="Dubayah_2022">(<a href="#ref-Dubayah_2022" role="doc-biblioref">Dubayah <em>et al.</em> 2022</a>)</span>, with temporal extent from 2019 to 2022. The spatial resolution is approximately 25 meters.</p>
+</section>
 <section id="literature" class="level3">
 <h3 class="anchored" data-anchor-id="literature">Literature</h3>
 <p>The discussion of our results are going to be discussed against a predefined literature. We performed a search in the Scopus database.</p>
@@ -149,45 +195,6 @@ div.csl-indent {
 </blockquote>
 <p>The search returned 93 results, after screening (the strategy was to read titles and abstract, and select studies related to the estimation of the effect of fire occurrence over forest biomass).</p>
 <p>The literature will serve, besides providing the theoretical foundation for the project development and future discussions, as a base to identify possible causes of forest above ground biomass loss. A DAG will be created with information obtained from the literature, and will be compared to the DAG of this experiment.</p>
-</section>
-<section id="experiment-scopus" class="level3">
-<h3 class="anchored" data-anchor-id="experiment-scopus">Experiment Scopus</h3>
-<p>The experiment will be performed within the Brazilian boundaries of the Amazon biome, in which we will analyse its forests formations. The experiment will cover the period between 2000 to 2021. We will analyse forests formations of any characteristics, and forest fires of any characteristics.</p>
-</section>
-<section id="data-sources" class="level3">
-<h3 class="anchored" data-anchor-id="data-sources">Data Sources</h3>
-<p>The fire occurrences are going to be extracted from MODIS MCD64A1 <span class="citation" data-cites="Giglio_2015">(<a href="#ref-Giglio_2015" role="doc-biblioref">Giglio <em>et al.</em> 2015</a>)</span> Version 6 product, which provides world wide burned area estimates from 2000 to 2022. The spatial resolution is approximately 500 meters.</p>
-<p>Forest cover will be represented by the Global Forest Change (1.9) <span class="citation" data-cites="Hansen_2013">(<a href="#ref-Hansen_2013" role="doc-biblioref">Hansen <em>et al.</em> 2013</a>)</span>, which provide forest cover loss from 2000 to 2021. The spatial resolution is approximately 30 meters.</p>
-<p>Biomass estimates will be provided by the GEDI L4A 2.1 Footprint Level Above ground Biomass Density product <span class="citation" data-cites="Dubayah_2022">(<a href="#ref-Dubayah_2022" role="doc-biblioref">Dubayah <em>et al.</em> 2022</a>)</span>, with temporal extent from 2019 to 2022. The spatial resolution is approximately 25 meters.</p>
-</section>
-<section id="experiment-design" class="level3">
-<h3 class="anchored" data-anchor-id="experiment-design">Experiment Design</h3>
-<p>We can see the experiment overview diagram in <a href="#fig-expdiag">Figure&nbsp;1</a>.</p>
-<div class="cell">
-<div id="fig-expdiag" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<div id="htmlwidget-42e75e70660a3efcb3f1" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-42e75e70660a3efcb3f1">{"x":{"diagram":"digraph expdiag {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.1, ranksep = 1,tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 2.2,\n        width = 3,\n        height = 1.5,\n        fontsize = 20,\n        tooltip = \" \"]\n\n  edge [arrowsize = 2,\n        penwidth = 2.2,\n        tooltip = \" \"]\n\n  a [label = \"LULC data\"]\n  b [label = \"Fire data\"]\n  c [label = \"AGB data\"]\n  d [label = \"Treatment/Control \n samples\"]\n  e [label = \"Distance to border\"]\n  f [label = \"Fire occurrence\"]\n  g [label = \"Forest cover\"]\n  h [label = \"AGB loss\"]\n  \n  a -> d b -> d\n  c -> h e -> h f -> h g -> d\n  a -> g a -> e b -> f\n  d -> h\n  \n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-<p></p><figcaption class="figure-caption">Figure 1: Experiment design diagram.</figcaption><p></p>
-</figure>
-</div>
-</div>
-<p>We are going to conduct a sampling scheme that will randomly extract ~400km² rectangles, spaced at least by ~100km between each other, by the Brazilian Amazon region.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="exp_dsn.svg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Experiment Design</figcaption><p></p>
-</figure>
-</div>
-<p>Inside each sampling rectangle, we are going to identify areas that burned in 2020 but not in 2021, these are going to be the treatment group. Cells that were not burned neither in 2020 and 2021 are going to be considered as the control group. We will ensure a minimal distance of 2km between observations of each group. We will also ensure that observations from both groups were not burned at least 5 years before 2020. We are going to repeat this process 100 times, each sample performed will suffer a shit in geographic projections to ensure more heterogeneous results between sampling rounds.</p>
-<p>We will also filter the sampling rectangles, to avoid areas in which we don’t have a lot of areas of internet (areas where we can sample control and treatment observations). The rule will be that both experiment group areas apt to be sampled should cover at least 30% of the sampling rectangle, each.</p>
-<p>We will sample 50 pixels of each group inside each sampling rectangle, which will cover up to ~10% of the areas that are suitable for sampling.</p>
-<p>We are going to use the following variables: above ground biomass, fire frequency, fire occurrence in 2020, experiment group, forest cover percentage inside burned pixel, fragmentation of the sampling rectangle, distance of observations to border.</p>
-</section>
-<section id="statistical-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="statistical-analysis">Statistical analysis</h3>
-<p>To estimate the effect of fire occurrence over forest above ground biomass, we are using diff-in-diffs, by comparing the AGB values before and after the fire event, for control and experiment areas. We will use a ordinary least squares regression to perform the estimations. Since we are analyzing spatial data, there is a possibility of spatial auto correlation to affect our statistical model, so we will analyse the model residuals to detect possible spatial dependence between observations. If the autocorrelation are found to be true, we will apply spatial regressions to try to adjust the model for spatial dependence. By the end of the statistical analysis, each sampling rectangle will present a mean effect estimation.</p>
-<p>To analyse the heterogeneity of the effects of fire over above ground forest biomass, we will aggregate the values of sampling rectangles off all sampling rounds in a course hexagonal figure. Each hexagonal cell will show an aggregated mean effect and the distribution of the mean effects of the sampling rectangles.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="exp_agg.svg" class="img-fluid figure-img"></p>
@@ -207,8 +214,8 @@ div.csl-indent {
 <div class="cell">
 <div id="fig-dags" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div id="htmlwidget-e476496db388f826e909" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e476496db388f826e909">{"x":{"diagram":"digraph dags {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.3, ranksep = 1, tooltip = \" \"]\n  \n  edge [tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 0.8,\n        height = 0.8,\n        tooltip = \" \"]\n        \n  a [label = < <B>Fire<\/B> >]\n  b [label = < <B>AGB<\/B> >]\n  1 [label = < <B>Fire<\/B> >]\n  2 [label = < <B>AGB<\/B> >]\n  \n  node [shape = circle,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 1,\n        tooltip = \" \"]\n  \n  d [label = SL] # Selective Logging\n  e [label = TC] # Tree characteristics\n  f [label = Drought]\n  g [label = DTB]\n  3 [label = Drought]\n  4 [label = DTB]\n  \n  a -> b  \n  d -> b\n  e -> a e -> b\n  f -> a f -> b\n  g -> a g-> b g -> d\n  \n\n  \n  \n  1 -> 2\n  3 -> 1 3 -> 2\n  4 -> 2\n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-254a0af6f60bf9be8f62" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-254a0af6f60bf9be8f62">{"x":{"diagram":"digraph dags {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.3, ranksep = 1, tooltip = \" \"]\n  \n  edge [tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 0.8,\n        height = 0.8,\n        tooltip = \" \"]\n        \n  a [label = < <B>Fire<\/B> >]\n  b [label = < <B>AGB<\/B> >]\n  1 [label = < <B>Fire<\/B> >]\n  2 [label = < <B>AGB<\/B> >]\n  \n  node [shape = circle,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 1,\n        tooltip = \" \"]\n  \n  d [label = SL] # Selective Logging\n  e [label = TC] # Tree characteristics\n  f [label = Drought]\n  g [label = DTB]\n  3 [label = Drought]\n  4 [label = DTB]\n  \n  a -> b  \n  d -> b\n  e -> a e -> b\n  f -> a f -> b\n  g -> a g-> b g -> d\n  \n\n  \n  \n  1 -> 2\n  3 -> 1 3 -> 2\n  4 -> 2\n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p></p><figcaption class="figure-caption">Figure 2: DAGs. TODO: need to put a title for each DAG</figcaption><p></p>
 </figure>
 </div>
