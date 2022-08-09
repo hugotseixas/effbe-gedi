@@ -143,7 +143,7 @@ div.csl-indent {
 <p>TITLE-ABS-KEY((fire OR burn) W/10 (forest OR tree) W/10 (carbon OR biomass OR cover OR volume OR density)) AND TITLE-ABS-KEY(amazon) AND (LIMIT-TO(LANGUAGE, “English”))</p>
 </blockquote>
 <p>The search returned 93 results, after screening (the strategy was to read titles and abstract, and select studies related to the estimation of the effect of fire occurrence over forest biomass).</p>
-<p>The literature will serve as a base to identify possible causes of forest above ground biomass loss. A DAG will be created with information obtained from the literature, and will be compared to the DAG of this experiment.</p>
+<p>The literature will serve, besides providing the theoretical foundation for the project development and future discussions, as a base to identify possible causes of forest above ground biomass loss. A DAG will be created with information obtained from the literature, and will be compared to the DAG of this experiment.</p>
 </section>
 <section id="experiment-scopus" class="level3">
 <h3 class="anchored" data-anchor-id="experiment-scopus">Experiment Scopus</h3>
@@ -157,16 +157,36 @@ div.csl-indent {
 <div class="cell">
 <div id="fig-expdiag" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div id="htmlwidget-fb8e26b41a539514eea3" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fb8e26b41a539514eea3">{"x":{"diagram":"digraph expdiag {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.1, ranksep = 1,tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 2.2,\n        width = 3,\n        height = 1.5,\n        fontsize = 20,\n        tooltip = \" \"]\n\n  edge [arrowsize = 2,\n        penwidth = 2.2,\n        tooltip = \" \"]\n\n  a [label = \"LULC data\"]\n  b [label = \"Fire data\"]\n  c [label = \"AGB data\"]\n  d [label = \"Experiment/Control \n samples\"]\n  e [label = \"Distance to border\"]\n  f [label = \"Fire occurrence\"]\n  g [label = \"Forest cover\"]\n  h [label = \"AGB loss\"]\n  \n  a -> d b -> d\n  c -> h e -> h f -> h g -> d\n  a -> g a -> e b -> f\n  d -> h\n  \n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e32d64de633f8afb1b7d" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e32d64de633f8afb1b7d">{"x":{"diagram":"digraph expdiag {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.1, ranksep = 1,tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 2.2,\n        width = 3,\n        height = 1.5,\n        fontsize = 20,\n        tooltip = \" \"]\n\n  edge [arrowsize = 2,\n        penwidth = 2.2,\n        tooltip = \" \"]\n\n  a [label = \"LULC data\"]\n  b [label = \"Fire data\"]\n  c [label = \"AGB data\"]\n  d [label = \"Treatment/Control \n samples\"]\n  e [label = \"Distance to border\"]\n  f [label = \"Fire occurrence\"]\n  g [label = \"Forest cover\"]\n  h [label = \"AGB loss\"]\n  \n  a -> d b -> d\n  c -> h e -> h f -> h g -> d\n  a -> g a -> e b -> f\n  d -> h\n  \n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p></p><figcaption class="figure-caption">Figure 1: Experiment design diagram.</figcaption><p></p>
 </figure>
 </div>
 </div>
+<p>We are going to conduct a sampling scheme that will randomly extract ~400km² rectangles, spaced at least by ~400km between each other, by the Brazilian Amazon region.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="exp_dsn.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Experiment Design</figcaption><p></p>
+</figure>
+</div>
+<p>Inside each sampling rectangle, we are going to identify areas that burned in 2020 but not in 2021, these are going to be the treatment group. Cells that were not burned neither in 2020 and 2021 are going to be considered as the control group. We will ensure a minimal distance of 2km between observations of each group. We will also ensure that observations from both groups were not burned at least 5 years before 2020. We are going to repeat this process 100 times, each sample performed will suffer a shit in geographic projections to ensure more heterogeneous results between sampling rounds.</p>
+<p>We will also filter the sampling rectangles, to avoid areas in which we don’t have a lot of areas of internet (areas where we can sample control and treatment observations). The rule will be that both experiment group areas apt to be sampled should cover at least 30% of the sampling rectangle, each.</p>
+<p>We will sample 50 pixels of each group inside each sampling rectangle, which will cover up to ~10% of the areas that are suitable for sampling.</p>
+<p>We are going to use the following variables: above ground biomass, fire frequency, fire occurrence in 2020, experiment group, forest cover percentage inside burned pixel, fragmentation of the sampling rectangle, distance of observations to border.</p>
 </section>
 <section id="statistical-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-analysis">Statistical analysis</h3>
-<p>To estimate the effect of fire occurrence over forest above ground biomass, we are using diff-in-diffs, by comparing the AGB values before and after the fire event, for control and experiment areas.</p>
+<p>To estimate the effect of fire occurrence over forest above ground biomass, we are using diff-in-diffs, by comparing the AGB values before and after the fire event, for control and experiment areas. We will use a ordinary least squares regression to perform the estimations. Since we are analyzing spatial data, there is a possibility of spatial auto correlation to affect our statistical model, so we will analyse the model residuals to detect possible spatial dependence between observations. If the autocorrelation are found to be true, we will apply spatial regressions to try to adjust the model for spatial dependence. By the end of the statistical analysis, each sampling rectangle will present a mean effect estimation.</p>
+<p>To analyse the heterogeneity of the effects of fire over above ground forest biomass, we will aggregate the values of sampling rectangles off all sampling rounds in a course hexagonal figure. Each hexagonal cell will show an aggregated mean effect and the distribution of the mean effects of the sampling rectangles.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="exp_agg.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Experiment Aggregation</figcaption><p></p>
+</figure>
+</div>
+<p>All visualizations are going to be interactive and as accessible as possible.</p>
+<p>Code and data will be publicly available, reproducibility will be facilitated as much as possible.</p>
 <hr>
 </section>
 </section>
@@ -178,8 +198,8 @@ div.csl-indent {
 <div class="cell">
 <div id="fig-dags" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div id="htmlwidget-ab7e6358131c585c5907" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ab7e6358131c585c5907">{"x":{"diagram":"digraph dags {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.3, ranksep = 1, tooltip = \" \"]\n  \n  edge [tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 0.8,\n        height = 0.8,\n        tooltip = \" \"]\n        \n  a [label = < <B>Fire<\/B> >]\n  b [label = < <B>AGB<\/B> >]\n  1 [label = < <B>Fire<\/B> >]\n  2 [label = < <B>AGB<\/B> >]\n  \n  node [shape = circle,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 1,\n        tooltip = \" \"]\n  \n  d [label = SL] # Selective Logging\n  e [label = TC] # Tree characteristics\n  f [label = Drought]\n  g [label = DTB]\n  3 [label = Drought]\n  4 [label = DTB]\n  \n  a -> b  \n  d -> b\n  e -> a e -> b\n  f -> a f -> b\n  g -> a g-> b g -> d\n  \n\n  \n  \n  1 -> 2\n  3 -> 1 3 -> 2\n  4 -> 2\n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3f43ab37374902824f89" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3f43ab37374902824f89">{"x":{"diagram":"digraph dags {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.3, ranksep = 1, tooltip = \" \"]\n  \n  edge [tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 0.8,\n        height = 0.8,\n        tooltip = \" \"]\n        \n  a [label = < <B>Fire<\/B> >]\n  b [label = < <B>AGB<\/B> >]\n  1 [label = < <B>Fire<\/B> >]\n  2 [label = < <B>AGB<\/B> >]\n  \n  node [shape = circle,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 1,\n        tooltip = \" \"]\n  \n  d [label = SL] # Selective Logging\n  e [label = TC] # Tree characteristics\n  f [label = Drought]\n  g [label = DTB]\n  3 [label = Drought]\n  4 [label = DTB]\n  \n  a -> b  \n  d -> b\n  e -> a e -> b\n  f -> a f -> b\n  g -> a g-> b g -> d\n  \n\n  \n  \n  1 -> 2\n  3 -> 1 3 -> 2\n  4 -> 2\n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p></p><figcaption class="figure-caption">Figure 2: DAGs. TODO: need to put a title for each DAG</figcaption><p></p>
 </figure>
 </div>

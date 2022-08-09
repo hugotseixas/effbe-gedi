@@ -47,7 +47,7 @@ The discussion of our results are going to be discussed against a predefined lit
 
 The search returned 93 results, after screening (the strategy was to read titles and abstract, and select studies related to the estimation of the effect of fire occurrence over forest biomass).
 
-The literature will serve as a base to identify possible causes of forest above ground biomass loss. A DAG will be created with information obtained from the literature, and will be compared to the DAG of this experiment.
+The literature will serve, besides providing the theoretical foundation for the project development and future discussions, as a base to identify possible causes of forest above ground biomass loss. A DAG will be created with information obtained from the literature, and will be compared to the DAG of this experiment.
 
 ### Experiment Scopus
 
@@ -88,7 +88,7 @@ grViz(
   a [label = 'LULC data']
   b [label = 'Fire data']
   c [label = 'AGB data']
-  d [label = 'Experiment/Control \n samples']
+  d [label = 'Treatment/Control \n samples']
   e [label = 'Distance to border']
   f [label = 'Fire occurrence']
   g [label = 'Forest cover']
@@ -105,9 +105,29 @@ grViz(
 
 ```
 
+We are going to conduct a sampling scheme that will randomly extract ~400km² rectangles, spaced at least by ~400km between each other, by the Brazilian Amazon region.
+
+![Experiment Design](exp_dsn.svg)
+
+Inside each sampling rectangle, we are going to identify areas that burned in 2020 but not in 2021, these are going to be the treatment group. Cells that were not burned neither in 2020 and 2021 are going to be considered as the control group. We will ensure a minimal distance of 2km between observations of each group. We will also ensure that observations from both groups were not burned at least 5 years before 2020. We are going to repeat this process 100 times, each sample performed will suffer a shit in geographic projections to ensure more heterogeneous results between sampling rounds.
+
+We will also filter the sampling rectangles, to avoid areas in which we don't have a lot of areas of internet (areas where we can sample control and treatment observations). The rule will be that both experiment group areas apt to be sampled should cover at least 30% of the sampling rectangle, each.
+
+We will sample 50 pixels of each group inside each sampling rectangle, which will cover up to ~10% of the areas that are suitable for sampling.
+
+We are going to use the following variables: above ground biomass, fire frequency, fire occurrence in 2020, experiment group, forest cover percentage inside burned pixel, fragmentation of the sampling rectangle, distance of observations to border. 
+
 ### Statistical analysis
 
-To estimate the effect of fire occurrence over forest above ground biomass, we are using diff-in-diffs, by comparing the AGB values before and after the fire event, for control and experiment areas.
+To estimate the effect of fire occurrence over forest above ground biomass, we are using diff-in-diffs, by comparing the AGB values before and after the fire event, for control and experiment areas. We will use a ordinary least squares regression to perform the estimations. Since we are analyzing spatial data, there is a possibility of spatial auto correlation to affect our statistical model, so we will analyse the model residuals to detect possible spatial dependence between observations. If the autocorrelation are found to be true, we will apply spatial regressions to try to adjust the model for spatial dependence. By the end of the statistical analysis, each sampling rectangle will present a mean effect estimation.
+
+To analyse the heterogeneity of the effects of fire over above ground forest biomass, we will aggregate the values of sampling rectangles off all sampling rounds in a course hexagonal figure. Each hexagonal cell will show an aggregated mean effect and the distribution of the mean effects of the sampling rectangles.
+
+![Experiment Aggregation](exp_agg.svg)
+
+All visualizations are going to be interactive and as accessible as possible.
+
+Code and data will be publicly available, reproducibility will be facilitated as much as possible.
 
 ------------------------------------------------------------------------
 
