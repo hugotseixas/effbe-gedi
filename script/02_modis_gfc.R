@@ -160,7 +160,7 @@ samples <- ctr_sample$
   reduceToVectors(
     reducer = ee$Reducer$countEvery(),
     geometry = ee_amazon,
-    crs = ee$Projection(burned_area$first()$projection())$atScale(10000),
+    crs = ee$Projection(burned_area$first()$projection())$atScale(20000),
     geometryType = 'bb',
     maxPixels = 1e9
   )
