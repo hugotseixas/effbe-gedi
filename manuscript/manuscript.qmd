@@ -1,11 +1,12 @@
 ---
-title: "Using remote sensing data to estimate short term effects of fire over forest aboveground biomass in the brazilian amazon: effects are..."
+title: "Using remote sensing data to estimate short term effects of fire over forest aboveground biomass in the brazilian amazon"
 author: 
   - name: Hugo Tameirão Seixas
     email: seixas.hugo@protonmail.com
     url: https://hugotseixas.com/
-    affiliations:
-      - name: State University of Campinas
+    affiliation: State University of Campinas
+  - name: Nathaniel Brunsell
+    affiliation: University of Kansas
 toc: true
 toc-title: Contents
 format: 
@@ -16,6 +17,7 @@ bibliography: references.bib
 csl: frontiers-in-ecology-and-the-environment.csl
 link-citations: true
 abstract: "The objective of this experiment is to estimate the effect of forest fire over the biomass of tropical rainforest in the brazillian amazon. The analysed aboveground biomass are predictions derived from Global Ecosystem Dynamics Investigation (GEDI) Level 4A (L4A) Version 2. The experimental design is based in the sampling areas of 25 hectares over the brazillian amazon biome, where burned forest areas are compared to intact forests. The fire estimates are derived from the Moderate Resolution Imaging Spectroradiometer (MODIS) Burned Area data product (MCD64A1 Version 6). We expect to estimate a distribution of effects for the entire biome, which will allow the discussion about its possible heterogeneity and confounders."
+license: Licensed by CC BY-NC-ND 4.0
 ---
 
 ```{r}
@@ -114,15 +116,19 @@ We will also apply a filter to the MiC, to avoid regions in which we don't have 
 
 ### Statistical analysis
 
-To estimate the effect of fire occurrence over forest above ground biomass, we are using diff-in-diffs, by comparing the AGB values before and after the fire event, for control and experiment areas. We will use a ordinary least squares regression to perform the estimations. Since we are analyzing spatial data, there is a possibility of spatial auto correlation to affect our statistical model, so we will analyse the model residuals to detect possible spatial dependence between observations. If the autocorrelation are found to be true, we will apply spatial regressions to try to adjust the model for spatial dependence. By the end of the statistical analysis, each sampling rectangle will present a mean effect estimation.
+To estimate the effect of fire occurrence over forest above ground biomass, we are using diff-in-diffs, by comparing the AGB values before and after the fire event for NB and YC areas. The analysis will be performed in a monthly time step, and will be represented as months before and after the event.
 
-To analyse the heterogeneity of the effects of fire over above ground forest biomass, we will aggregate the values of sampling rectangles off all sampling rounds in a course hexagonal figure. Each hexagonal cell will show an aggregated mean effect and the distribution of the mean effects of the sampling rectangles.
+We will use a ordinary least squares regression to perform the estimations. Since we are analyzing spatial data, there is a possibility of spatial auto correlation to affect our statistical model, so we will analyse the model residuals to detect possible spatial dependence between observations. If the autocorrelation are found to be true, we will apply spatial regressions to try to adjust the model for spatial dependence. 
 
-![Experiment Aggregation](exp_agg.svg)
+By the end of the statistical analysis, each sampling rectangle will present an average effect estimation.
+
+To analyse the heterogeneity of the effects of fire over above ground forest biomass, we will observe the range of effects found inside and between the ObCs. 
 
 ### Statistical model assumptions
 
-We can see two DAGs in the @fig-dags
+The statistical model in this study assumes that the occurrence of droughts and the distance to the forest edge are confounders of the effect of fire over forest biomass. We will adjust our model to the distance of observations to forest edges explicitly, by adding this variable in the regression. We will avoid the confounding of droughts by analyzing the experiment groups in a relatively small region, in which will assume will present homogeneous climate characteristics. 
+
+We aknowledge that there are more confounders of the effect of fire over forest biomass, but these are difficult to add in our model, specially due to the large scale of the experiment. We will provide a diagram of all the possible confounders found in the literature, so that it can be compared to the diagram that expresses the statistical model of this project (@fig-dags).
 
 ```{r}
 #| label: fig-dags
@@ -192,9 +198,15 @@ grViz(
 
 ```
 
+We also make other assumptions for the statistical models: 
+
+1. The sampled forest areas are assumed to remain forests by all the period of the experiment;
+
+2. We assume parallel trends between YB and NB groups (if fire did not occur in YB, differences between the two groups post-event period would remain the same in relation to the pre-event period)
+
 ### Data Sources {#sec-datasource}
 
-The fire occurrences are going to be extracted from MODIS MCD64A1 [@Giglio_2015] Version 6 product, which provides world wide burned area estimates from 2000 to 2022. The spatial resolution is approximately 500 meters.
+The fire occurrences are going to be extracted from MODIS MCD64A1 [@Giglio_2015] Version 6 product, which provides world wide burned area estimates from 2000 to 2022. The spatial resolution is approximately 500 meters. Maybe change it to the Global Fire Emissions Database (GBEF)
 
 Forest cover will be represented by the Global Forest Change (1.9) [@Hansen_2013], which provide forest cover loss from 2000 to 2021. The spatial resolution is approximately 30 meters.
 
@@ -206,13 +218,9 @@ The discussion of our results are going to be discussed against a predefined lit
 
 > TITLE-ABS-KEY((fire OR burn) W/10 (forest OR tree) W/10 (carbon OR biomass OR cover OR volume OR density)) AND TITLE-ABS-KEY(amazon) AND (LIMIT-TO(LANGUAGE, "English"))
 
-The search returned 93 results, after screening (the strategy was to read titles and abstract, and select studies related to the estimation of the effect of fire occurrence over forest biomass).
+The search returned 106 results, after screening (the strategy was to read titles and abstract, and select studies related to the estimation of the effect of fire occurrence over forest biomass).
 
 The literature will serve, besides providing the theoretical foundation for the project development and future discussions, as a base to identify possible causes of forest above ground biomass loss. A DAG will be created with information obtained from the literature, and will be compared to the DAG of this experiment.
-
-All visualizations are going to be interactive and as accessible as possible.
-
-Code and data will be publicly available, reproducibility will be facilitated as much as possible.
 
 ------------------------------------------------------------------------
 
@@ -220,11 +228,27 @@ Code and data will be publicly available, reproducibility will be facilitated as
 
 ### Effect of fire occurrence over forest above ground biomass
 
+We will show a table with the summary values of our model.
+
+We will present a figure using lines (average values) and shaded areas (uncertainty of values) to represent the biomass variation along the months from 2019 to 2021.
+
+We will also present density plots showing the average effect and the uncertainty of the effect.
+
 ### Sources of effect heterogeneity
+
+We will show a map with hexagonal grid to represent spatial heterogeneity of the effects.
+
+![Experiment Aggregation](exp_agg.svg)
 
 ------------------------------------------------------------------------
 
 # Discussion
+
+Compare our results with values found in field experiments and from other models. 
+
+Discuss probable sources of uncertainties and heterogeneity of the effects.
+
+Provide further paths for the area of study.
 
 ------------------------------------------------------------------------
 
@@ -233,5 +257,7 @@ Code and data will be publicly available, reproducibility will be facilitated as
 ------------------------------------------------------------------------
 
 # Supporting Information
+
+Provide all code and data to ensure transparency and reproducibility.
 
 # References
