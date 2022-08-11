@@ -24,6 +24,18 @@ license: Licensed by CC BY-NC-ND 4.0
 #| include: false
 
 library(DiagrammeR)
+library(sf)
+library(geobr)
+library(mapsf)
+library(tidyverse)
+
+# Load amazon biome limits
+amazon <- read_biomes(year = 2019, showProgress = FALSE) %>%
+  filter(code_biome == 1) %>%
+  st_transform(crs = "EPSG:4326")
+
+# Load sample scheme example
+sample_sf <- read_sf(here::here("data/sample.geojson")) %>% st_as_sf()
 
 ```
 
@@ -103,9 +115,26 @@ grViz(
 
 ```
 
-To extract observations of each group, we will use land cover and fire occurrence data (@sec-datasource). Only a small subset of the whole data available is going to be used to make inferences, and will be performed by a sampling scheme. The sampling scheme will consist of four steps: 1. randomly assign rectangles of ~10000km² inside the Brazilian Amazon biome, spaced at least by ~100km between each other, these are going to be named major sample cells (MaC); 2. randomly assign one rectangle of ~100km² inside each MaC, these are going to be named minor sample cells (MiC); 3. randomly assign 100 rectangles of ~0.25km² (50 NB rectangles and 50 YB rectangles) inside each MiC, NB rectangles will have to be at least 2km far from YB rectangles, these will be named observation cells (ObC); 4. extract values inside each ObC. This process will be repeat 100 times, in which we will shift the MaC positions to ensure more heterogeneity between sampling rounds.
+To extract observations of each group, we will use land cover and fire occurrence data (@sec-datasource). Only a small subset of the whole data available is going to be used to make inferences, and will be performed by a sampling scheme. The sampling scheme will consist of four steps: 1. randomly assign rectangles of ~10000km² inside the Brazilian Amazon biome, spaced at least by ~100km between each other, these are going to be named major sample cells (MaC); 2. randomly assign one rectangle of ~400km² inside each MaC, these are going to be named minor sample cells (MiC); 3. randomly assign 100 rectangles of ~0.25km² (50 NB rectangles and 50 YB rectangles) inside each MiC, NB rectangles will have to be at least 2km far from YB rectangles, these will be named observation cells (ObC); 4. extract values inside each ObC. This process will be repeat 100 times, in which we will shift the MaC positions to ensure more heterogeneity between sampling rounds.
 
-![Experiment Design](exp_dsn.svg)
+```{r}
+#| label: fig-samp
+#| echo: false
+#| fig-cap: "Sampling scheme."
+#| fig-alt: "This is a diagram"
+
+mf_theme(bg = "transparent")
+mf_map(amazon)
+mf_map(sample_sf, add = TRUE, col = "black")
+mf_inset_on(x = sample_sf[c(1),], pos = "bottomright", cex = .2)
+mf_init(sample_sf[c(50),], expandBB = rep(10, 10))
+mf_map(amazon, add = TRUE)
+mf_map(sample_sf, add = TRUE, col = "black")
+box()
+mf_inset_off()
+
+```
+
 
 We are going to use the following variables: above ground biomass, fire frequency, fire occurrence in 2020, experiment group, forest cover percentage inside burned pixel, fragmentation of the sampling rectangle, distance of observations to border. 
 

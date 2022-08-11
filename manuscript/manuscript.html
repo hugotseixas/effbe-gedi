@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.0.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -161,18 +161,22 @@ div.csl-indent {
 <div class="cell">
 <div id="fig-expdiag" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div id="htmlwidget-d1588e2bdca20d176609" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d1588e2bdca20d176609">{"x":{"diagram":"digraph expdiag {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.1, ranksep = 1,tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 2.2,\n        width = 3,\n        height = 1.5,\n        fontsize = 20,\n        tooltip = \" \"]\n\n  edge [arrowsize = 2,\n        penwidth = 2.2,\n        tooltip = \" \"]\n\n  a [label = \"LULC data\"]\n  b [label = \"Fire data\"]\n  c [label = \"AGB data\"]\n  d [label = \"Treatment/Control \n samples\"]\n  e [label = \"Distance to border\"]\n  f [label = \"Fire occurrence\"]\n  g [label = \"Forest cover\"]\n  h [label = \"AGB loss\"]\n  \n  a -> d b -> d\n  c -> h e -> h f -> h g -> d\n  a -> g a -> e b -> f\n  d -> h\n  \n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a33479c650e0219a99e0" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a33479c650e0219a99e0">{"x":{"diagram":"digraph expdiag {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.1, ranksep = 1,tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 2.2,\n        width = 3,\n        height = 1.5,\n        fontsize = 20,\n        tooltip = \" \"]\n\n  edge [arrowsize = 2,\n        penwidth = 2.2,\n        tooltip = \" \"]\n\n  a [label = \"LULC data\"]\n  b [label = \"Fire data\"]\n  c [label = \"AGB data\"]\n  d [label = \"Treatment/Control \n samples\"]\n  e [label = \"Distance to border\"]\n  f [label = \"Fire occurrence\"]\n  g [label = \"Forest cover\"]\n  h [label = \"AGB loss\"]\n  \n  a -> d b -> d\n  c -> h e -> h f -> h g -> d\n  a -> g a -> e b -> f\n  d -> h\n  \n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p></p><figcaption class="figure-caption">Figure 1: Experiment design diagram.</figcaption><p></p>
 </figure>
 </div>
 </div>
-<p>To extract observations of each group, we will use land cover and fire occurrence data (<a href="#sec-datasource">Section&nbsp;3.0.6</a>). Only a small subset of the whole data available is going to be used to make inferences, and will be performed by a sampling scheme. The sampling scheme will consist of four steps: 1. randomly assign rectangles of ~10000km² inside the Brazilian Amazon biome, spaced at least by ~100km between each other, these are going to be named major sample cells (MaC); 2. randomly assign one rectangle of ~100km² inside each MaC, these are going to be named minor sample cells (MiC); 3. randomly assign 100 rectangles of ~0.25km² (50 NB rectangles and 50 YB rectangles) inside each MiC, NB rectangles will have to be at least 2km far from YB rectangles, these will be named observation cells (ObC); 4. extract values inside each ObC. This process will be repeat 100 times, in which we will shift the MaC positions to ensure more heterogeneity between sampling rounds.</p>
-<div class="quarto-figure quarto-figure-center">
+<p>To extract observations of each group, we will use land cover and fire occurrence data (<a href="#sec-datasource">Section&nbsp;3.0.6</a>). Only a small subset of the whole data available is going to be used to make inferences, and will be performed by a sampling scheme. The sampling scheme will consist of four steps: 1. randomly assign rectangles of ~10000km² inside the Brazilian Amazon biome, spaced at least by ~100km between each other, these are going to be named major sample cells (MaC); 2. randomly assign one rectangle of ~400km² inside each MaC, these are going to be named minor sample cells (MiC); 3. randomly assign 100 rectangles of ~0.25km² (50 NB rectangles and 50 YB rectangles) inside each MiC, NB rectangles will have to be at least 2km far from YB rectangles, these will be named observation cells (ObC); 4. extract values inside each ObC. This process will be repeat 100 times, in which we will shift the MaC positions to ensure more heterogeneity between sampling rounds.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-samp" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="exp_dsn.svg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Experiment Design</figcaption><p></p>
+<p><img src="manuscript_files/figure-html/fig-samp-1.png" class="img-fluid figure-img" alt="This is a diagram" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure 2: Sampling scheme.</figcaption><p></p>
 </figure>
+</div>
+</div>
 </div>
 <p>We are going to use the following variables: above ground biomass, fire frequency, fire occurrence in 2020, experiment group, forest cover percentage inside burned pixel, fragmentation of the sampling rectangle, distance of observations to border.</p>
 <p>We will also apply a filter to the MiC, to avoid regions in which we don’t have a lot of areas of internet (areas where we can sample NB and YB observations). The rule will be that apt areas for both experiment groups should cover at least 30% of the MiC, each.</p>
@@ -190,13 +194,13 @@ div.csl-indent {
 <section id="statistical-model-assumptions" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-model-assumptions">Statistical model assumptions</h3>
 <p>The statistical model in this study assumes that the occurrence of droughts and the distance to the forest edge are confounders of the effect of fire over forest biomass. We will adjust our model to the distance of observations to forest edges explicitly, by adding this variable in the regression. We will avoid the confounding of droughts by analyzing the experiment groups in a relatively small region, in which will assume will present homogeneous climate characteristics.</p>
-<p>We aknowledge that there are more confounders of the effect of fire over forest biomass, but these are difficult to add in our model, specially due to the large scale of the experiment. We will provide a diagram of all the possible confounders found in the literature, so that it can be compared to the diagram that expresses the statistical model of this project (<a href="#fig-dags">Figure&nbsp;2</a>).</p>
+<p>We aknowledge that there are more confounders of the effect of fire over forest biomass, but these are difficult to add in our model, specially due to the large scale of the experiment. We will provide a diagram of all the possible confounders found in the literature, so that it can be compared to the diagram that expresses the statistical model of this project (<a href="#fig-dags">Figure&nbsp;3</a>).</p>
 <div class="cell">
 <div id="fig-dags" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div id="htmlwidget-9e8b9e860390f58f39b1" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9e8b9e860390f58f39b1">{"x":{"diagram":"digraph dags {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.3, ranksep = 1, tooltip = \" \"]\n  \n  edge [tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 0.8,\n        height = 0.8,\n        tooltip = \" \"]\n        \n  a [label = < <B>Fire<\/B> >]\n  b [label = < <B>AGB<\/B> >]\n  1 [label = < <B>Fire<\/B> >]\n  2 [label = < <B>AGB<\/B> >]\n  \n  node [shape = circle,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 1,\n        tooltip = \" \"]\n  \n  d [label = SL] # Selective Logging\n  e [label = TC] # Tree characteristics\n  f [label = Drought]\n  g [label = DTB]\n  3 [label = Drought]\n  4 [label = DTB]\n  \n  a -> b  \n  d -> b\n  e -> a e -> b\n  f -> a f -> b\n  g -> a g-> b g -> d\n  \n\n  \n  \n  1 -> 2\n  3 -> 1 3 -> 2\n  4 -> 2\n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-<p></p><figcaption class="figure-caption">Figure 2: DAGs. TODO: need to put a title for each DAG</figcaption><p></p>
+<div id="htmlwidget-bf7c61a9b3b5e7ba396d" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bf7c61a9b3b5e7ba396d">{"x":{"diagram":"digraph dags {\n  \n  tooltip = \" \"\n  \n  graph [layout = dot, rankdir = TD, nodesep = 0.3, ranksep = 1, tooltip = \" \"]\n  \n  edge [tooltip = \" \"]\n  \n  node [shape = box,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 0.8,\n        height = 0.8,\n        tooltip = \" \"]\n        \n  a [label = < <B>Fire<\/B> >]\n  b [label = < <B>AGB<\/B> >]\n  1 [label = < <B>Fire<\/B> >]\n  2 [label = < <B>AGB<\/B> >]\n  \n  node [shape = circle,\n        fontname = Helvetica,\n        style = filled,\n        fontcolor = \"#343a40\"\n        fillcolor = \"#f7f7f9\"\n        penwidth = 1.2,\n        fixedsize = true,\n        width = 1,\n        tooltip = \" \"]\n  \n  d [label = SL] # Selective Logging\n  e [label = TC] # Tree characteristics\n  f [label = Drought]\n  g [label = DTB]\n  3 [label = Drought]\n  4 [label = DTB]\n  \n  a -> b  \n  d -> b\n  e -> a e -> b\n  f -> a f -> b\n  g -> a g-> b g -> d\n  \n\n  \n  \n  1 -> 2\n  3 -> 1 3 -> 2\n  4 -> 2\n  \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p></p><figcaption class="figure-caption">Figure 3: DAGs. TODO: need to put a title for each DAG</figcaption><p></p>
 </figure>
 </div>
 </div>
