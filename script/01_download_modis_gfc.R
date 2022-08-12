@@ -100,7 +100,7 @@ forest_2021 <- forest_2000$gt(forest_loss)$
 
 # Get forest area inside MODIS pixel
 forest_area <-
-  forest_2000$gt(loss)$
+  forest_2000$gt(forest_loss)$
   reduceResolution(ee$Reducer$mean(), maxPixels = 5000)$
   multiply(ee$Image$pixelArea())
 
@@ -155,34 +155,3 @@ ee_imagecollection_to_local(
   scale = scale,
   crs = proj
 )
-
-ragg <- terra::aggregate(cellSize(r), fact = 20, fun = "sum", na.rm = TRUE)
-
-fragg <- ragg/cellSize(ragg)
-
-fragg[fragg < 0.1] <- 0
-fragg[fragg >= 0.1] <- 1
-
-writeRaster(cellSize(r), "r.tif")
-
-c <- ee_as_raster(
-  cover_area,
-  region = ee_aoi,
-  scale = 500
-)
-
-c <- rast(c)
-
-cagg <- terra::aggregate(c, fact = 20, fun = "sum", na.rm = TRUE)
-
-fcagg <- cagg/cellSize(cagg)
-
-fcagg[fcagg < 0.1] <- 0
-fcagg[fcagg >= 0.1] <- 1
-
-plot(fcagg*fragg)
-
-h_grid <- setValues(aggregate(fcagg, 4, sum), rep(0:1, 2, each = ncol(grid)))
-v_grid <- setValues(aggregate(fcagg, 4, sum), 0:1)
-grid <- v_grid * h_grid
-grid <- project(grid, fcagg)
