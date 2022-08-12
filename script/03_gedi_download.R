@@ -61,12 +61,14 @@ time_range <- "2019-01-01T00:00:00Z,2023-01-01T00:00:00Z"
 
 # RETRIEVE DATA URL TO PERFORM DOWNLOAD ---------------------------------------
 
-walk2(
+walk(
   .x = sb$id,
-  .y = st_geometry(sb),
-  function(id, geometry) {
+  function(sample_id) {
 
-    bounding_box <- st_bbox(geometry)
+    geometry <- sb %>%
+      filter(id == sample_id)
+
+    bounding_box <- st_bbox(st_geometry(geometry))
 
     # Set the search filters
     response <-
@@ -98,7 +100,7 @@ walk2(
       )
 
     # Create dir to store data
-    dir_create(glue("data/gedi_04A/sample_{id}/"))
+    dir_create(glue("data/gedi_04A/sample_{sample_id}/"))
 
     # Iterate trough all the URL and files
     walk2(
@@ -110,7 +112,7 @@ walk2(
         GET(
           url = url_link,
           write_disk(
-            glue("./data/gedi_04A/sample_{id}/{file_name}"),
+            glue("./data/gedi_04A/sample_{sample_id}/{file_name}"),
             overwrite = TRUE
           ),
           config(netrc = TRUE, netrc_file = "auth/.netrc"),
@@ -120,7 +122,7 @@ walk2(
         # Get the main groups names of the HDF5 file
         h5f_names <-
           h5ls(
-            glue("data/gedi_04A/sample_{id}/{file_name}"),
+            glue("data/gedi_04A/sample_{sample_id}/{file_name}"),
             recursive = FALSE
           ) %>%
           filter(str_detect(name, 'BEAM')) %>%
@@ -134,7 +136,7 @@ walk2(
             # Open HDF5 file
             h5f <-
               h5read(
-                glue("data/gedi_04A/sample_{id}/{file_name}"),
+                glue("data/gedi_04A/sample_{sample_id}/{file_name}"),
                 name = beam,
                 compoundAsDataFrame = FALSE,
                 bit64conversion = "bit64"
@@ -163,24 +165,28 @@ walk2(
             # Include geographic information to the table
             h5f_geo_table <- h5f_table %>%
               st_as_sf(coords = c("lon", "lat"), crs = "EPSG:4326") %>%
-              st_join(st_as_sf(geometry), left = FALSE) %>%
-              mutate(sample_id = id)
+              st_join(geometry, left = FALSE) %>%
+              mutate(sample_id = sample_id)
 
             # Create the name of the file to be written
             product <-
-              str_sub(glue("./data/gedi_04A/sample_{id}/{file_name}"), 53, 94)
+              str_sub(
+                glue("./data/gedi_04A/sample_{sample_id}/{file_name}"),
+                53,
+                94
+              )
 
             # Write file as a parquet table
             st_write_parquet(
               h5f_geo_table,
-              glue("data/gedi_04A/sample_{id}/{product}_{beam}.parquet")
+              glue("data/gedi_04A/sample_{sample_id}/{product}_{beam}.parquet")
             )
 
           }
         )
 
         # Delete HDF5 file (too big to store in the computer)
-        file_delete(glue("./data/gedi_04A/sample_{id}/{file_name}"))
+        file_delete(glue("./data/gedi_04A/sample_{sample_id}/{file_name}"))
 
       }
     )
