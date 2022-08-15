@@ -20,6 +20,7 @@
 library(terra)
 library(sf)
 library(geojsonsf)
+library(sfarrow)
 library(geobr)
 library(glue)
 library(fs)
@@ -33,8 +34,7 @@ library(tidyverse)
 # SET GEOGRAPHIC EXTENT -------------------------------------------------------
 
 # Load amazon biome limits
-amazon <- geobr::read_biomes(year = 2019) %>%
-  filter(code_biome == 1)
+amazon <- st_read_parquet("data/aoi/raisg.parquet")
 
 # LOAD PRODUCTS ---------------------------------------------------------------
 
@@ -42,43 +42,52 @@ cc <- rast("data/control_cells.tif")
 
 ec <- rast("data/event_cells.tif")
 
-ff <- rast("data/fire_freq.tif")
-
-fa <- rast("data/forest_area.tif")
-
-pa <- cellSize(cc)
-
-gc <- c(cc, ec, ff, fa, pa)
+gc <- c(cc, ec)
 
 names(gc) <-
-  c("control_cells", "event_cells", "fire_freq", "forest_area", "pixel_area")
+  c("control_cells", "event_cells")
 
-ma_gc <- aggregate(cc, fact = 50)
+ma_gc <- aggregate(cc, fact = 70)
 
 sc <-
-  setValues(ma_gc, rep(c(1, 0, 0), 3, each = ncol(ma_gc))) *
-  setValues(ma_gc, c(1, 0, 0))
+  setValues(ma_gc, rep(c(1, 0), 2, each = ncol(ma_gc))) *
+  setValues(ma_gc, c(1, 0))
 
 sc[sc == 0] <- NA
 
-writeRaster(sc, "data/sampling_cells.tif", overwrite = TRUE)
-
 sb <- as.polygons(sc, dissolve = FALSE)
 
-table <- as_tibble(terra::extract(gc, sb, xy = TRUE))
+set.seed(1)
 
-sb_sub <- table %>%
-  group_by(ID) %>%
-  summarise(
-    across(.cols = c(control_cells, event_cells), ~ sum(.)/n()),
-    across(.cols = c(forest_area, pixel_area), ~ sum(.))
-  ) %>%
-  mutate(forest_fraction = forest_area / pixel_area) %>%
-  filter(control_cells > 0.05, event_cells > 0.05, forest_fraction > 0.05)
+sbc <-
+  map_df(
+    .x = 1:50,
+    function(sample_round) {
 
-sb %>%
-  st_as_sf() %>%
-  mutate(id = row_number()) %>%
-  select(id) %>%
-  filter(id %in% sb_sub$ID) %>%
-  write_sf("data/samples.geojson", delete_dsn = TRUE)
+      set.seed(sample_round)
+
+      ssb <- shift(sb, runif(1, -1, 1) * 30000, runif(1, -1, 1) * 30000)
+
+      ssb <- mask(ssb, project(vect(amazon), crs(ssb)))
+
+      table <- as_tibble(terra::extract(gc, ssb, xy = TRUE))
+
+      ssb_sub <- table %>%
+        group_by(ID) %>%
+        summarise(
+          across(.cols = c(control_cells, event_cells), ~ sum(.))
+        ) %>%
+        filter(control_cells >= 20, event_cells >= 20)
+
+      ssb <- ssb %>%
+        st_as_sf() %>%
+        mutate(id = row_number(), rep = sample_round) %>%
+        select(id, rep) %>%
+        filter(id %in% ssb_sub$ID)
+
+      return(ssb)
+
+    }
+  )
+
+st_write_parquet(sbc, "data/samples.parquet")
