@@ -20,6 +20,7 @@
 library(rgee)
 library(terra)
 library(sf)
+library(sfarrow)
 library(geojsonsf)
 library(geobr)
 library(googledrive)
@@ -35,9 +36,7 @@ ee_Initialize(user = "h234184@dac.unicamp.br", drive = TRUE)
 # SET GEOGRAPHIC EXTENT -------------------------------------------------------
 
 # Load amazon biome limits
-amazon <- geobr::read_biomes(year = 2019) %>%
-  filter(code_biome == 1) %>%
-  st_transform(crs = "EPSG:4326")
+amazon <- st_read_parquet("data/aoi/raisg.parquet")
 
 # Set bounding box
 aoi <- st_as_sfc(st_bbox(amazon))
@@ -77,7 +76,7 @@ fire_2021 <- fire$
   reduce(ee$Reducer$anyNonZero())$
   unmask()$
   # Create buffer to avoid neighborhood with areas that burned in 2021
-  focalMax(radius = 5)
+  focalMax(radius = 2)
 
 # Filter areas that burned in 2020 but not in 2021
 anti_2021 <- fire_2020$gt(fire_2021)$selfMask()
@@ -111,7 +110,7 @@ fire_event <- forest_2021$eq(anti_2021)
 # Filter pixels that did not burn in 2020 and 2021
 # Avoid neighbors with pixels that burned in 2020/2021
 fire_control <- forest_2021$
-  gt(fire_2020$unmask()$focalMax(radius = 5))$
+  gt(fire_2020$unmask()$focalMax(radius = 4))$
   gt(fire_2021$unmask())
 
 # DOWNLOAD DATA ---------------------------------------------------------------
@@ -149,7 +148,7 @@ ee_as_raster(
 )
 
 ee_imagecollection_to_local(
-  ic = fire,
+  ic = fire$filterDate('2020-01-01', '2020-12-31'),
   dsn = "data/fire.tif",
   region = ee_aoi,
   scale = scale,
